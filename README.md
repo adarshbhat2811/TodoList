@@ -6,12 +6,12 @@ The database used is an in-memory database using HSQL, i.e. there is a schema an
 
 The above diagram shows the flow of control and the components of the application.
 The views are made up of JSP files. The controller is responsible for assessing the request and forward it to the corresponding service. The business logic resides in the service layer. The data access layer is used to communicate between the application and the database. 
-The design patter implemented, as shown in the above figure is MVC design pattern. 
+The design patter implemented, as shown in the above figure is MVC design pattern. /n/n
 
-The application in its current state is very simple. Given more time, some of the other things that can be added to it are: 
+The application in its current state is very simple. Given more time, some of the other things that can be added to it are: /n
 
-•	Implementing JUnit test cases, so that the code is tested before deployment.
-•	Using a persistent database such as MySQL or Oracle.
-•	Improving the UI, by adding validations for input fields. 
-•	Improving the security of the application by using Spring security. 
+•	Implementing JUnit test cases, so that the code is tested before deployment. /n
+•	Using a persistent database such as MySQL or Oracle./n
+•	Improving the UI, by adding validations for input fields. /n
+•	Improving the security of the application by using Spring security. /n
  
