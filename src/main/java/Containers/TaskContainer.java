@@ -1,8 +1,11 @@
 package Containers;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,7 +30,7 @@ public class TaskContainer {
 	@Autowired
 	private TaskService taskService;
 
-	// make add , remove , delete methods for urls.
+	
 
 	@GetMapping("/addTaskForm")
 	public ModelAndView showAddForm(@ModelAttribute("user_id") String user_id,@ModelAttribute("error") String error) {
@@ -42,10 +45,24 @@ public class TaskContainer {
 	@GetMapping("/updateTaskForm")
 	public ModelAndView showUpdateForm(@ModelAttribute("task_id") String task_id,
 			@ModelAttribute("user_id") String user_id,@ModelAttribute("error") String error, Model model, HttpSession session) {
+		ToDoTask task = null;
 		User user = (User) session.getAttribute("user");
+		List<ToDoTask> taskList = taskService.getTasks(user.getUser_Id());
+		for(int i = 0; i < taskList.size(); i++) {
+			if(task_id.equals(Integer.toString(taskList.get(i).getTask_id()))) {
+				task = taskService.findTaskById(taskList.get(i).getTask_id());
+				break;
+			}
+			
+		}
+		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("userId", user_id);
 		mv.addObject("taskId", task_id);
+		mv.addObject("taskTitle", task.getTitle());
+		mv.addObject("taskDesc", task.getDescription());
+		mv.addObject("taskDueDate", task.getDueDate());
+		mv.addObject("taskCompleted", task.getIsChecked());
 		mv.addObject("error", error);
 		mv.addObject("userForm", new ToDoTask());
 		return mv;
