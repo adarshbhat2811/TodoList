@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+
+	<context:component-scan base-package="Containers" />
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven />
+	<context:annotation-config />
+
+
+	<!-- <bean class = "org.springframework.web.servlet.view.InternalResourceViewResolver"> 
+		<property name = "prefix" value = "/WEB-INF/views/" /> <property name = "suffix" 
+		value = ".jsp" /> </bean> -->
+
+
+	<!-- embedded hsql database -->
+	<!-- note here the jdbc namespace -->
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+		<jdbc:script location="classpath:schema.sql" />
+		<!-- optional, holds initial data to be inserted into the table -->
+		<jdbc:script location="classpath:testData.sql" />
+	</jdbc:embedded-database>
+
+	<!-- create jdbctemplate using dataSource -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- data access layer -->
+	<bean id="userDao" class="DAO.UserDAO" />
+	<!-- business layer -->
+	<bean id="userService" class="Service.UserService">
+
+	</bean>
+	<bean id="taskDao" class="DAO.TaskDAO" />
+	<!-- business layer -->
+	<bean id="taskService" class="Service.TaskService">
+
+	</bean>
+
+
+</beans>
